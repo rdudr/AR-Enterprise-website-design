@@ -210,6 +210,39 @@
   .mark{font-family:var(--serif);font-size:clamp(56px,13vw,190px);line-height:.85;color:rgba(67,79,53,.1);letter-spacing:-.03em;margin-top:40px;white-space:nowrap;overflow:hidden}
 
   /* floating call button on mobile */
+
+  /* ---------- OUR WORK (photo gallery) ---------- */
+  .work{padding:100px 0 0}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:36px 0 26px}
+  .tabs button{font:inherit;font-size:14.5px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:10px 18px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+  .tabs button span{font-weight:500;color:var(--muted);font-size:13px}
+  .tabs button[aria-selected="true"]{background:var(--forest);color:#fff;border-color:var(--forest)}
+  .tabs button[aria-selected="true"] span{color:rgba(255,255,255,.7)}
+  .gal{columns:4 240px;column-gap:14px}
+  .gal[hidden]{display:none}
+  .gal figure{break-inside:avoid;margin:0 0 14px;border-radius:16px;overflow:hidden;background:var(--sand);position:relative;cursor:zoom-in}
+  .gal img{width:100%;height:auto;transition:transform .5s ease}
+  .gal figure:hover img{transform:scale(1.03)}
+  .gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;font-size:13px;font-weight:500;color:#fff;background:linear-gradient(180deg,rgba(20,28,17,0),rgba(20,28,17,.85));opacity:0;transition:opacity .3s}
+  .gal figure:hover figcaption,.gal figure:focus-visible figcaption{opacity:1}
+  .gal figure:focus-visible{outline:3px solid var(--moss);outline-offset:2px}
+  dialog.lb{border:0;padding:0;background:transparent;max-width:94vw;max-height:94vh;margin:auto;overflow:visible}
+  dialog.lb::backdrop{background:rgba(14,20,12,.9)}
+  .lb img{max-width:min(1100px,94vw);max-height:80vh;width:auto;height:auto;border-radius:14px;margin:0 auto}
+  .lb p{color:#fff;text-align:center;margin-top:14px;font-size:15px}
+  .lb button{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:grid;place-items:center}
+  .lb button:hover{background:rgba(255,255,255,.26)}
+  .lb .prev{left:16px}
+  .lb .next{right:16px}
+  .lb .prev svg{transform:rotate(180deg)}
+  .lb .close{top:20px;right:16px;transform:none;font-size:26px;line-height:1}
+  @media (max-width:640px){
+    .gal{columns:2;column-gap:8px}
+    .gal figure{margin-bottom:8px;border-radius:12px}
+    .gal figcaption{opacity:1;font-size:11.5px;padding:20px 8px 8px}
+    .lb .prev,.lb .next{top:auto;bottom:16px;transform:none}
+  }
+
   .call-fab{display:none;position:fixed;right:16px;bottom:16px;z-index:60;background:var(--forest);color:#fff;border-radius:999px;padding:13px 18px;align-items:center;gap:8px;font-weight:600;box-shadow:0 10px 26px rgba(20,28,17,.3)}
 
   /* gentle reveal, nothing flashy */
@@ -307,7 +340,7 @@
     <div class="links">
       <a href="#about">About</a>
       <a href="#services">Services</a>
-      <a href="#diagnostics">Diagnostics</a>
+      <a href="#work">Our work</a>
       <a href="#process">How we work</a>
       <a href="#team">Team</a>
     </div>
@@ -317,6 +350,7 @@
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#diagnostics">Diagnostics</a>
+      <a href="#work">Trainings &amp; audits</a>
       <a href="#process">How we work</a>
       <a href="#team">Team</a>
       <a href="#contact">Contact</a>
@@ -403,7 +437,7 @@
 
     <div class="feature-row">
       <article class="fcard rv">
-        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=75" alt="Engineer inspecting industrial equipment" loading="lazy">
+        <img src="assets/gallery/field-03-sm.jpg" alt="AR Enterprise auditor recording readings at an electrical panel" loading="lazy">
         <div class="txt"><span class="k">Core service</span><h3>Energy Audits</h3><p>Detailed and walk-through audits of electrical and thermal systems, with clear savings options and payback for each.</p></div>
       </article>
       <article class="fcard rv">
@@ -457,6 +491,75 @@
     </div>
   </div>
 </section>
+
+<!-- OUR WORK -->
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:0">
+      <div>
+        <span class="eyebrow">Our work</span>
+        <h2>Trainings, site audits and the <em>instruments</em> we use</h2>
+      </div>
+      <p class="lead">Real photographs from our training sessions, field visits and our own measuring kit.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Photo categories">
+      <button role="tab" aria-selected="true" aria-controls="g-training" id="t-training">Trainings <span>17</span></button>
+      <button role="tab" aria-selected="false" aria-controls="g-field" id="t-field">Field audits <span>4</span></button>
+      <button role="tab" aria-selected="false" aria-controls="g-tool" id="t-tool">Instruments <span>16</span></button>
+    </div>
+    <div class="gal" id="g-training" role="tabpanel" aria-labelledby="t-training">
+      <figure tabindex="0" data-full="assets/gallery/training-01.jpg"><img src="assets/gallery/training-01-sm.jpg" alt="Energy conservation session for engineering students" loading="lazy"><figcaption>Energy conservation session for engineering students</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-02.jpg"><img src="assets/gallery/training-02-sm.jpg" alt="Explaining energy audit instruments in class" loading="lazy"><figcaption>Explaining energy audit instruments in class</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-03.jpg"><img src="assets/gallery/training-03-sm.jpg" alt="Talk on energy efficiency in industry" loading="lazy"><figcaption>Talk on energy efficiency in industry</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-04.jpg"><img src="assets/gallery/training-04-sm.jpg" alt="Live demonstration of audit instruments" loading="lazy"><figcaption>Live demonstration of audit instruments</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-05.jpg"><img src="assets/gallery/training-05-sm.jpg" alt="AR Enterprise training on energy conservation" loading="lazy"><figcaption>AR Enterprise training on energy conservation</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-06.jpg"><img src="assets/gallery/training-06-sm.jpg" alt="Hands-on session with measuring instruments" loading="lazy"><figcaption>Hands-on session with measuring instruments</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-07.jpg"><img src="assets/gallery/training-07-sm.jpg" alt="Students trying out audit instruments" loading="lazy"><figcaption>Students trying out audit instruments</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-08.jpg"><img src="assets/gallery/training-08-sm.jpg" alt="Students trying out audit instruments" loading="lazy"><figcaption>Students trying out audit instruments</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-09.jpg"><img src="assets/gallery/training-09-sm.jpg" alt="Instrument kit walkthrough for students" loading="lazy"><figcaption>Instrument kit walkthrough for students</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-10.jpg"><img src="assets/gallery/training-10-sm.jpg" alt="Instrument kit walkthrough for students" loading="lazy"><figcaption>Instrument kit walkthrough for students</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-11.jpg"><img src="assets/gallery/training-11-sm.jpg" alt="Energy conservation pledge with students" loading="lazy"><figcaption>Energy conservation pledge with students</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-12.jpg"><img src="assets/gallery/training-12-sm.jpg" alt="Showing students how a power analyser connects" loading="lazy"><figcaption>Showing students how a power analyser connects</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-13.jpg"><img src="assets/gallery/training-13-sm.jpg" alt="Energy conservation awareness talk" loading="lazy"><figcaption>Energy conservation awareness talk</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-14.jpg"><img src="assets/gallery/training-14-sm.jpg" alt="Energy conservation pledge session" loading="lazy"><figcaption>Energy conservation pledge session</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-15.jpg"><img src="assets/gallery/training-15-sm.jpg" alt="Awareness session at a pharmacy college" loading="lazy"><figcaption>Awareness session at a pharmacy college</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-16.jpg"><img src="assets/gallery/training-16-sm.jpg" alt="Presentation on energy efficiency practices" loading="lazy"><figcaption>Presentation on energy efficiency practices</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/training-17.jpg"><img src="assets/gallery/training-17-sm.jpg" alt="Guest lecture on energy efficiency" loading="lazy"><figcaption>Guest lecture on energy efficiency</figcaption></figure>
+    </div>
+    <div class="gal" id="g-field" role="tabpanel" aria-labelledby="t-field" hidden>
+      <figure tabindex="0" data-full="assets/gallery/field-01.jpg"><img src="assets/gallery/field-01-sm.jpg" alt="On-site inspection at a client plant" loading="lazy"><figcaption>On-site inspection at a client plant</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/field-02.jpg"><img src="assets/gallery/field-02-sm.jpg" alt="Checking an electrical distribution board" loading="lazy"><figcaption>Checking an electrical distribution board</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/field-03.jpg"><img src="assets/gallery/field-03-sm.jpg" alt="Recording readings at an electrical panel" loading="lazy"><figcaption>Recording readings at an electrical panel</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/field-04.jpg"><img src="assets/gallery/field-04-sm.jpg" alt="Power analyser clamps on an incoming panel" loading="lazy"><figcaption>Power analyser clamps on an incoming panel</figcaption></figure>
+    </div>
+    <div class="gal" id="g-tool" role="tabpanel" aria-labelledby="t-tool" hidden>
+      <figure tabindex="0" data-full="assets/gallery/tool-01.jpg"><img src="assets/gallery/tool-01-sm.jpg" alt="Temperature and humidity meter" loading="lazy"><figcaption>Temperature and humidity meter</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-02.jpg"><img src="assets/gallery/tool-02-sm.jpg" alt="Thermal imaging camera" loading="lazy"><figcaption>Thermal imaging camera</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-03.jpg"><img src="assets/gallery/tool-03-sm.jpg" alt="Digital earth resistance tester" loading="lazy"><figcaption>Digital earth resistance tester</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-04.jpg"><img src="assets/gallery/tool-04-sm.jpg" alt="Differential pressure meter" loading="lazy"><figcaption>Differential pressure meter</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-05.jpg"><img src="assets/gallery/tool-05-sm.jpg" alt="Ultrasonic flow meter" loading="lazy"><figcaption>Ultrasonic flow meter</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-06.jpg"><img src="assets/gallery/tool-06-sm.jpg" alt="Calibrated digital insulation tester" loading="lazy"><figcaption>Calibrated digital insulation tester</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-07.jpg"><img src="assets/gallery/tool-07-sm.jpg" alt="Smartphone thermal imaging camera" loading="lazy"><figcaption>Smartphone thermal imaging camera</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-08.jpg"><img src="assets/gallery/tool-08-sm.jpg" alt="Smartphone thermal imaging camera" loading="lazy"><figcaption>Smartphone thermal imaging camera</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-09.jpg"><img src="assets/gallery/tool-09-sm.jpg" alt="Clamp-on power meter" loading="lazy"><figcaption>Clamp-on power meter</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-10.jpg"><img src="assets/gallery/tool-10-sm.jpg" alt="Three-phase power quality analyser" loading="lazy"><figcaption>Three-phase power quality analyser</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-11.jpg"><img src="assets/gallery/tool-11-sm.jpg" alt="Digital lux meter" loading="lazy"><figcaption>Digital lux meter</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-12.jpg"><img src="assets/gallery/tool-12-sm.jpg" alt="Digital tachometer" loading="lazy"><figcaption>Digital tachometer</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-13.jpg"><img src="assets/gallery/tool-13-sm.jpg" alt="Infrared pyrometer" loading="lazy"><figcaption>Infrared pyrometer</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-14.jpg"><img src="assets/gallery/tool-14-sm.jpg" alt="Anemometer for air flow" loading="lazy"><figcaption>Anemometer for air flow</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-15.jpg"><img src="assets/gallery/tool-15-sm.jpg" alt="Digital insulation tester" loading="lazy"><figcaption>Digital insulation tester</figcaption></figure>
+      <figure tabindex="0" data-full="assets/gallery/tool-16.jpg"><img src="assets/gallery/tool-16-sm.jpg" alt="Insulation tester with calibration certificate" loading="lazy"><figcaption>Insulation tester with calibration certificate</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<dialog class="lb" id="lb" aria-label="Photo viewer">
+  <img src="" alt="">
+  <p></p>
+  <button class="close" aria-label="Close">&times;</button>
+  <button class="prev" aria-label="Previous photo"><svg class="i"><use href="#i-arrow"/></svg></button>
+  <button class="next" aria-label="Next photo"><svg class="i"><use href="#i-arrow"/></svg></button>
+</dialog>
 
 <!-- PROCESS -->
 <section class="process" id="process">
@@ -594,6 +697,38 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 }) : null;
   document.querySelectorAll('.rv').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+
+  // Photo gallery tabs + viewer
+  const tabs = document.querySelectorAll('.tabs [role=tab]');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(o => {
+      const on = o === t;
+      o.setAttribute('aria-selected', on);
+      document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
+    });
+  }));
+  const lb = document.getElementById('lb');
+  const lbImg = lb.querySelector('img'), lbCap = lb.querySelector('p');
+  let set = [], at = 0;
+  const show = i => {
+    at = (i + set.length) % set.length;
+    const f = set[at];
+    lbImg.src = f.dataset.full;
+    lbImg.alt = lbCap.textContent = f.querySelector('figcaption').textContent;
+  };
+  document.querySelectorAll('.gal figure').forEach(f => {
+    const open = () => { set = [...f.parentElement.children]; show(set.indexOf(f)); lb.showModal(); };
+    f.addEventListener('click', open);
+    f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
+  lb.querySelector('.close').onclick = () => lb.close();
+  lb.querySelector('.prev').onclick = () => show(at - 1);
+  lb.querySelector('.next').onclick = () => show(at + 1);
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+  lb.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') show(at - 1);
+    if (e.key === 'ArrowRight') show(at + 1);
+  });
 
   // Enquiry form -> WhatsApp
   document.getElementById('enq').addEventListener('submit', e => {
