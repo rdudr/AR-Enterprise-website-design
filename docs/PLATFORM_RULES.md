@@ -1,6 +1,6 @@
 # AR Energy Services — Platform Rules
 
-Status: **rules only, nothing built yet.** This file is the single source of truth for how the
+Status: **rules + first tool built** (ARES Console, 18 Oct 2026 — see §9). This file is the single source of truth for how the
 AR Enterprise platform is split across the domain, how data moves between the tools, how things are
 named, and how the private side is secured. Read it before writing any code for this platform, and
 update it (in the same commit) whenever a decision here changes.
@@ -181,6 +181,55 @@ Client → Site → Audit → Asset → Reading → Result → Measure (ECM) →
 - Every record carries: who recorded it, when it was taken, when it was last saved, and from which
   device.
 
+### 6a. Cloud sync — the main difference from the KISEM apps
+
+In the KISEM apps, each person collected data on their own phone and the team **merged files by
+hand** (Excel export → share → import on another phone). ARES does not do that. **The cloud is the
+meeting point**: every app sends its data to the data server by itself, and every app reads the
+team's data back from it.
+
+Example: Person 1 records readings at Plant 1 with no signal. Person 2 records at Plant 2, also
+offline. Each phone keeps its records in a local queue. The moment either phone is online, its queue
+is pushed to the server automatically — no button, no file. The server merges and stores it, the
+processing and Report Studio use it straight away, and on its next sync Person 2's phone pulls
+Person 1's records too (for the audits Person 2 is assigned to), so everyone sees the same picture.
+
+Rules:
+
+- **Offline first, sync automatically.** Apps never block data entry for lack of network. Records
+  wait in an encrypted on-device queue and are pushed when online (on app open, on reconnect, and
+  every few minutes while open). The app shows "waiting to sync: N" so nobody worries.
+- **Push, then pull.** Each sync sends local changes first, then fetches everything changed on the
+  server since the last sync (`since` timestamp) for that person's assigned audits and that app.
+- **Merge on the server, never by people.** Same record UUID → newest `saved_at` wins and the older
+  copy is kept as a version. A different record using an asset tag already taken in the same audit
+  and app is refused, with the name of who recorded it.
+- **Excel stays an export, not a merge path.** People can still download Excel for their own use,
+  but data enters the system only through sync (or a logged upload in the Ops workspace).
+- **Work log.** Every app records a *work session* (who, app, audit, device, start and end time,
+  number of records) and sends it with the sync. The Team dashboard uses these to show who is
+  working now, hours logged and records per hour. Nothing is estimated — if an app did not log it,
+  it is not shown.
+
+### 6b. One login for every app, access given per app
+
+- Every person has **one Login ID and password** that works in every ARES app.
+- Access is given **per app**: the admin ticks which apps each person may use (e.g. a freelancer
+  gets only Compressed Air and Pumps). An app the person is not given refuses the login.
+- Access to data is given **per audit**: a person sees and adds data only for the audits (and so the
+  industries) they are assigned to.
+- Each person has a status: **Active**, **On hold** (temporary — cannot log in or sync, keeps
+  everything, can be reactivated) or **Revoked** (removed — cannot log in or sync). Changing status
+  or removing an app takes effect **immediately**: the server ends that person's open sessions, and
+  every sync request re-checks status, app access and audit assignment, so a phone that was offline
+  when access was removed is refused the moment it tries to sync.
+- Data already on a revoked person's phone never reaches the server. The admin can see in the
+  activity log that a refused sync was attempted.
+- Freelancers and staff are the same kind of account, marked "Freelancer" or "Staff" so the
+  dashboard can filter them; freelancers get the Engineer role only.
+- Passwords are set by the admin as a one-time temporary password; the person must change it at
+  first login. The admin never sees the new password.
+
 ---
 
 ## 7. Audit status (one lifecycle for everything)
@@ -230,6 +279,12 @@ Rules:
 
 ## 9. What stays as it is right now
 
+**Built so far — ARES Console** (`ares-ops` repository, kept private): the team dashboard (who is
+working now, running tasks, hours / records / records-per-hour per person), Team & access (one
+login for all apps, per-app access, hold / revoke / reset password), audits with industry tags and
+team assignment, tasks, the append-only activity log, and the sync API the field apps will call
+(`docs/SYNC_API.md` in that repo). It runs locally until the server is bought.
+
 - This repository currently holds the **public website** (`index.html`, `assets/`). It is live and
   is not to be restructured until the build of the platform actually starts.
 - When building starts, the public site moves into its part (`ares-public` / `public/`) without
@@ -239,7 +294,8 @@ Rules:
 
 - [ ] Trial end date on Hostinger, and where the public site will live after it.
 - [ ] Server choice for `ops` + `api` (Hostinger VPS or other) and database.
-- [ ] One repository with folders, or separate `ares-*` repositories.
+- [x] Separate repositories: this one for the public site, `ares-ops` (private) for the Console
+  and data server. Decided 18 Oct 2026.
 - [ ] Whether "pump efficiency" and "PumpUp" are one tool or two.
 - [ ] Who the Super Admins are.
 - [ ] First list of clusters and sectors to seed the industry-tag tables.
