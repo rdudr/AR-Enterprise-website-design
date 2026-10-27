@@ -94,6 +94,22 @@ Other naming rules:
 - Dates in files and IDs: `YYYY-MM-DD`. Financial year written as `FY2026-27`.
 - Units always in the field name when ambiguous: `power_kw`, `flow_m3h`, `temp_c`.
 
+### 3a. AR Enterprise is separate from KISEM
+
+AR Enterprise is a different client from the KISEM programme (IIT Gandhinagar). Decided 27 Oct 2026:
+
+- **Never change, commit to or push KISEM repositories** as part of AR work, and never connect KISEM
+  apps or KISEM data to ARES. KISEM's own fixes are KISEM's business.
+- **AR field apps are their own apps in their own repositories.** Each one reuses the matching KISEM
+  app's **formulas, calculation steps and graph logic**, but has its **own name, logo and interface**
+  (names and logos to be supplied by AR Enterprise; until then the working codes in §3 are used).
+  AR apps sign in and sync through ARES only.
+- **Keeping the logic in step:** the kit in `ares-ops/tools/kisem-logic-sync/` does this. Each KISEM
+  repo carries an `ar-logic.json` plus a small workflow (added by the KISEM side). When a listed
+  calculation file changes, the AR app repo gets a pull request with the file copied byte-for-byte
+  into `vendor/kisem/…`, plus a checklist of page and graph changes to port by hand. A daily check
+  catches anything a notification missed. Nothing reaches an AR app without review.
+
 ---
 
 ## 4. Identifiers (all system-generated)

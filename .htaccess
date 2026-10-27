@@ -1,0 +1,13 @@
+# The repo also holds internal documents (platform rules, notes for coding tools). They stay in
+# GitHub but must never be served by the public website.
+RedirectMatch 404 (?i)^/docs(/|$)
+RedirectMatch 404 (?i)\.md$
+RedirectMatch 404 (?i)^/\.(git|github|claude)(/|$)
+
+# Basic hardening for the static site.
+Options -Indexes
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
