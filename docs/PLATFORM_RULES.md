@@ -213,8 +213,10 @@ Person 1's records too (for the audits Person 2 is assigned to), so everyone see
 Rules:
 
 - **Offline first, sync automatically.** Apps never block data entry for lack of network. Records
-  wait in an encrypted on-device queue and are pushed when online (on app open, on reconnect, and
-  every few minutes while open). The app shows "waiting to sync: N" so nobody worries.
+  wait in the app's private storage on the phone (Android keeps it private to the app; the apps do
+  not add their own encryption) and are pushed when online (on app open, on reconnect, a few
+  seconds after a change, and every few minutes while open). The app shows "waiting to sync: N" so
+  nobody worries.
 - **Push, then pull.** Each sync sends local changes first, then fetches everything changed on the
   server since the last sync (`since` timestamp) for that person's assigned audits and that app.
 - **Merge on the server, never by people.** Same record UUID → newest `saved_at` wins and the older
@@ -245,6 +247,31 @@ Rules:
   dashboard can filter them; freelancers get the Engineer role only.
 - Passwords are set by the admin as a one-time temporary password; the person must change it at
   first login. The admin never sees the new password.
+
+### 6c. The field apps: look, release and reports
+
+How to build an app, its data model, the UI and keyboard rules, the offline guarantees and the
+sign-in logic are written down in **`ares-ops/docs/AR_APP_GUIDE.md`**. Every new process app follows
+it. The decisions behind it:
+
+- **Look:** light, like the website (paper background, dark ink, DM Sans and Fraunces), one accent
+  per app from its logo. Text meets WCAG AA contrast; every page works with a keyboard (skip link,
+  visible focus, labelled fields, Escape closes menus). No example placeholders, no emoji.
+- **Company profile once per audit:** each app offers "use existing company or start new" from the
+  profiles already saved for the audit in any app.
+- **Cookies:** the apps set none and track nothing; each app has a Privacy & storage page. The
+  Console uses one necessary sign-in cookie. The website's policy is `privacy.html`.
+- **Android releases:** every push to an app's `main` builds a signed APK on GitHub and publishes
+  it to `rdudr/AR-Enterprise-APPS-Repo-`, whose page
+  (https://rdudr.github.io/AR-Enterprise-APPS-Repo-/) lists the newest version of every app.
+  Installed apps check that list and offer the update. APK files are named
+  `<apk name>-v<version>.apk` (`ar-pump-testing-v0.1.7.apk`).
+- **One signing key** for all AR apps, kept outside every repository (build laptop and GitHub
+  secrets). Losing it means no installed app can be updated, so it must be backed up.
+- **Report Studio** reads each audit straight from ARES, organised by the company profile. Apps send
+  no files and there is no PostMan hand-off. **Remaining:** Report Studio's design and letterhead
+  (to be defined or integrated later); until then app PDFs use a plain AR page frame, never the
+  KISEM letterhead. Photo upload from the apps is also still to do.
 
 ---
 
@@ -300,6 +327,10 @@ working now, running tasks, hours / records / records-per-hour per person), Team
 login for all apps, per-app access, hold / revoke / reset password), audits with industry tags and
 team assignment, tasks, the append-only activity log, and the sync API the field apps will call
 (`docs/SYNC_API.md` in that repo). It runs locally until the server is bought.
+
+**Built so far — field apps** (one private repo each): BRIEF, JET, Pump Testing, Air Findings,
+Boiler & Fuel, AHU & Cooling. All on the light AR design, synced through ARES, released as signed
+APKs to the download page (§6c).
 
 - This repository currently holds the **public website** (`index.html`, `assets/`). It is live and
   is not to be restructured until the build of the platform actually starts.
