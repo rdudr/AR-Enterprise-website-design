@@ -263,7 +263,7 @@ it. The decisions behind it:
   Console uses one necessary sign-in cookie. The website's policy is `privacy.html`.
 - **Android releases:** every push to an app's `main` builds a signed APK on GitHub and publishes
   it to `rdudr/AR-Enterprise-APPS-Repo-`, whose page
-  (https://rdudr.github.io/AR-Enterprise-APPS-Repo-/) lists the newest version of every app.
+  (https://ops.arenergyservices.in/apps/) lists the newest version of every app.
   Installed apps check that list and offer the update. APK files are named
   `<apk name>-v<version>.apk` (`ar-pump-testing-v0.1.7.apk`).
 - **One signing key** for all AR apps, kept outside every repository (build laptop and GitHub
