@@ -328,6 +328,16 @@ login for all apps, per-app access, hold / revoke / reset password), audits with
 team assignment, tasks, the append-only activity log, and the sync API the field apps will call
 (`docs/SYNC_API.md` in that repo). It runs locally until the server is bought.
 
+**Built so far — Power Quality** (`ares-power`, app code `power`): the AI power quality analyser,
+a web app at https://ops.arenergyservices.in/pqa/ (analysis code from KISEM AI-PQA under AR names
+and look). Sign-in is the ARES Login ID with the Power Quality app ticked; its server checks every
+call with ARES, and no passwords live in its code. Two modes: **for a company audit** (upload form
+filled from the audit's company profile; Save to audit stores a `pq_recording` record plus the
+workbook and charts as audit files, for Report Studio) or **quick check** (nothing saved). Opened
+from each field app's company page and each audit's page in the Console (`/pqa/?audit=<id>`).
+Instrument models: ALM-20, ALM-31, ALM-36, ALM-45, KM 2400, PQ-1938, clamp meter; admin edits live
+in `/var/lib/ares-power/config` on the server and survive updates.
+
 **Built so far — field apps** (one private repo each): BRIEF, JET, Pump Testing, Air Findings,
 Boiler & Fuel, AHU & Cooling. All on the light AR design, synced through ARES, released as signed
 APKs to the download page (§6c).
