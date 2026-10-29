@@ -339,7 +339,7 @@ Instrument models: ALM-20, ALM-31, ALM-36, ALM-45, KM 2400, PQ-1938, clamp meter
 in `/var/lib/ares-power/config` on the server and survive updates.
 
 **Built so far — field apps** (one private repo each): BRIEF, JET, Pump Testing, Air Findings,
-Boiler & Fuel, AHU & Cooling. All on the light AR design, synced through ARES, released as signed
+Boiler & Fuel, AHU & Cooling, MLA (motor load analysis; keeps the name MLA by decision of 29 Oct 2026). All on the light AR design, synced through ARES, released as signed
 APKs to the download page (§6c).
 
 - This repository currently holds the **public website** (`index.html`, `assets/`). It is live and
