@@ -275,6 +275,11 @@ it. The decisions behind it:
 
 ---
 
+- **Field apps on the web:** every field app also runs as a web app (installable PWA) at
+  `ops.arenergyservices.in/field/<app>/`, same login and data as on the phone. The Console's
+  App console opens them; the Console itself has no APK download buttons (the download page stays
+  at `/apps/` for installing on phones).
+
 ### 6d. Correcting data, finalising audits and previous reports (Console)
 
 - Super Admins and Heads can **edit or remove any record** from the Console (Field apps > app >
