@@ -275,6 +275,18 @@ it. The decisions behind it:
 
 ---
 
+### 6d. Correcting data, finalising audits and previous reports (Console)
+
+- Super Admins and Heads can **edit or remove any record** from the Console (Field apps > app >
+  company). Each change is a new version (the old one is kept) and reaches the phones at their
+  next sync. Removed records stay on the server as versions.
+- When the report is made, the audit is **finalised** (optionally with the final report PDF). It
+  leaves the running lists in the Console and the apps, and its data is locked; it can be
+  reopened for a correction.
+- **Previous reports** lists finalised audits. Any audit can be downloaded as one **ZIP**: company
+  details, every app's records (CSV and JSON), every photo and file with an index (what, who, when,
+  where) and the final report, for keeping on the office's own computers.
+
 ## 7. Audit status (one lifecycle for everything)
 
 `Draft → In field → Processing → Review → Approved → Published` (and `Archived`).
