@@ -282,8 +282,8 @@ it. The decisions behind it:
 
 ### 6d. Correcting data, finalising audits and previous reports (Console)
 
-- Super Admins and Heads can **edit or remove any record** from the Console (Field apps > app >
-  company). Each change is a new version (the old one is kept) and reaches the phones at their
+- Super Admins (any record) and Admins (records of their own apps) can **edit or remove records**
+  from the Console (Field apps > app > company). Each change is a new version (the old one is kept) and reaches the phones at their
   next sync. Removed records stay on the server as versions.
 - When the report is made, the audit is **finalised** (optionally with the final report PDF). It
   leaves the running lists in the Console and the apps, and its data is locked; it can be
@@ -297,8 +297,8 @@ it. The decisions behind it:
 - AR Enterprise's own GST invoicing (tax invoices, credit notes, purchases, GSTR-1 and GSTR-3B) runs
   on the AR server as **GST Billing**: the open-source Free GST Billing Software (MIT licence), app
   code `bills`. It is opened from the Console (Tools > GST Billing).
-- Only **Super Admins and Heads** can open it, with their Console sign-in; there is no separate
-  password. Holding or revoking a person ends their billing access too.
+- Only **Super Admins**, and **Admins who were given GST Billing** (Team & access), can open it,
+  with their Console sign-in; there is no separate password. Holding or revoking a person ends their billing access too.
 - Its data is the company's own billing, kept apart from audit data: it is not linked to clients,
   audits or the field apps, and never shown on the public website. It is backed up daily with the
   rest of the server.
@@ -307,7 +307,7 @@ it. The decisions behind it:
 
 `Draft → In field → Processing → Review → Approved → Published` (and `Archived`).
 
-- Only a Head Member or Super Admin can move an audit to **Approved**.
+- Only an Admin or Super Admin can move an audit to **Approved**.
 - Only **Published** audits feed the public Impact page.
 - Moving back from Approved/Published needs a written reason, which goes in the activity log.
 
@@ -319,8 +319,9 @@ Roles:
 
 | Role | Can do |
 |---|---|
-| **Super Admin** | Everything, including managing Head Members, roles, system settings, backups, and deleting or archiving clients. Keep this to 1–2 people. |
-| **Head Member** | All work in every module: create clients/sites/audits, collect and edit data, run processing, generate and approve reports, publish, manage Engineers. Cannot change Super Admins or system settings. |
+| **Main Super Admin** (owner) | The account made at first setup. Everything a Super Admin can do, and the only one who can make or change other Super Admins. **Nobody** can change, hold, revoke or reset the owner — not even another Super Admin. |
+| **Super Admin** | Sees everything; manages Admins and Engineers, roles, system settings, backups, and deleting or archiving clients. Cannot change the owner or other Super Admins. Keep this to 1–2 people. |
+| **Admin** (role code `head`, formerly "Head Member") | Uses the Console **only for the apps given to them**: those apps' data, the audits and companies that have data from those apps (or that they made or are assigned to), their own team's tasks, work and activity. Manages only Engineers who work on their apps, gives or takes **only apps they hold themselves**, and can hold, revoke or reset only an Engineer who works on nothing outside their apps. Finalises an audit only when all its data is from their apps. Can never change their own access, another Admin, or any Super Admin. GST Billing only if given it. |
 | **Engineer** | Collect and edit data only for audits they are assigned to; generate draft reports. Cannot approve, publish, or see unassigned clients. |
 | **Viewer** (optional, later) | Read-only access to assigned audits, e.g. a client's own report. |
 
@@ -330,7 +331,7 @@ Rules:
   apps shipped seeded logins — none of those carry over). Super Admin creates every account and the
   person sets their own password on first login.
 - Passwords stored only as strong hashes (argon2id or bcrypt). Two-factor login required for Super
-  Admin and Head Member.
+  Admin and Admin.
 - Sessions in secure, HTTP-only cookies; automatic logout after inactivity; login attempts
   rate-limited and locked after repeated failures.
 - Every action is checked on the **server** against the role and audit assignment — hiding a
