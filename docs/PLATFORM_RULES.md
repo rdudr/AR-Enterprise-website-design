@@ -292,6 +292,17 @@ it. The decisions behind it:
   details, every app's records (CSV and JSON), every photo and file with an index (what, who, when,
   where) and the final report, for keeping on the office's own computers.
 
+### 6e. GST Billing (billing.arenergyservices.in)
+
+- AR Enterprise's own GST invoicing (tax invoices, credit notes, purchases, GSTR-1 and GSTR-3B) runs
+  on the AR server as **GST Billing**: the open-source Free GST Billing Software (MIT licence), app
+  code `bills`. It is opened from the Console (Tools > GST Billing).
+- Only **Super Admins and Heads** can open it, with their Console sign-in; there is no separate
+  password. Holding or revoking a person ends their billing access too.
+- Its data is the company's own billing, kept apart from audit data: it is not linked to clients,
+  audits or the field apps, and never shown on the public website. It is backed up daily with the
+  rest of the server.
+
 ## 7. Audit status (one lifecycle for everything)
 
 `Draft → In field → Processing → Review → Approved → Published` (and `Archived`).
